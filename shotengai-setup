@@ -72,34 +72,33 @@ if [[ ! -d "$HOME/.rbenv/plugins/ruby-build" ]]; then
     git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
 fi
 
-ruby_version="2.7.2"
-rails_version="6.0.2"
-bundler_version="2.2.15"
+log_info "Installing Ruby 2.7.2 ..."
+  rbenv install 2.7.2
 
-log_info "Installing Ruby $ruby_version ..."
-  rbenv install "$ruby_version"
-
-log_info "Setting $ruby_version as global default Ruby ..."
-  rbenv global $ruby_version
+log_info "Setting 2.7.2 as global default Ruby ..."
+  rbenv global 2.7.2
   rbenv rehash
 
 log_info "Updating to latest Rubygems version ..."
   gem update --system
 
-log_info "Installing Rails $rails_version ..."
-  gem install rails -v "$rails_version"
+log_info "Installing Rails 6.0.2 ..."
+  gem install rails -v 6.0.2
 
-log_info "Installing Bundler $bundler_version ..."
-  gem install bundler:"$bundler_version"
+log_info "Installing Bundler 2.2.15 ..."
+  gem install bundler:2.2.15
 
 ## Install Docker
-if [[ ! -d docker info > /dev/null 2>&1 ]]; then
+if [[ ! $(which docker) && $(docker --version) ]]; then
   log_info "Installing Docker ..."
     curl https://get.docker.com/ | sh
 fi
 # avoid typing sudo
 sudo usermod -aG docker ${USER}
 sudo usermod -aG docker shotengai
+
+# Delete packages no longer required
+sudo apt dist-upgrade && sudo apt autoremove -y
 
 # check_docker() {
 #   (which docker || which docker.io) 2>/dev/null

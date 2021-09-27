@@ -1,26 +1,26 @@
 #!/bin/bash
 
 ## Make sure only root can run our script
-check_root() {
-  if [[ $EUID -ne 0 ]]; then
-    echo "This script must be run as root. Please sudo or log in as root first." 1>&2
-    exit 1
-  fi
-}
 
-## Add user Shotengai
-#password: shotengai_codeflakes_2021
-adduser shotengai
-usermod -aG sudo shotengai
-passwd -d shotengai_codeflakes_2021
+if [[ $EUID -ne 0 ]]; then
+  echo "This script must be run as root. Please sudo or log in as root first." 1>&2
+  exit 1
+fi
+
+# check_root() {
+#   if [[ $EUID -ne 0 ]]; then
+#     echo "This script must be run as root. Please sudo or log in as root first." 1>&2
+#     exit 1
+#   fi
+# }
 
 ## Install Ruby & Ruby on Rails
 trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
 
-set -e
-log_info() {
-  printf "\n\e[0;35m $1\e[0m\n\n"
-}
+# set -e
+# log_info() {
+#   printf "\n\e[0;35m $1\e[0m\n\n"
+# }
 
 if [ ! -f "$HOME/.bashrc" ]; then
   touch $HOME/.bashrc
@@ -93,26 +93,37 @@ log_info "Installing Bundler $bundler_version ..."
   gem install bundler:"$bundler_version"
 
 ## Install Docker
-check_docker() {
-  (which docker || which docker.io) 2>/dev/null
-  echo $?
-}
-
-check_and_install_docker() {
-  found_docker=$(check_docker)
-  if [ "$found_docker" -ne 0 ]; then
-    echo Failed to find docker or docker.io on your PATH.
-    read -p "Enter to install Docker from https://get.docker.com/ or Ctrl+C to exit"
+if [[ ! -d docker info > /dev/null 2>&1 ]]; then
+  log_info "Installing Docker ..."
     curl https://get.docker.com/ | sh
-
-    found_docker=$(check_docker)
-    if [ "$found_docker" -ne 0 ]; then
-      echo Still failed to find docker or docker.io on your PATH.
-      echo Docker install failed. Quitting.
-      exit
-    fi
-  fi
-}
+fi
 # avoid typing sudo
 sudo usermod -aG docker ${USER}
 sudo usermod -aG docker shotengai
+
+# check_docker() {
+#   (which docker || which docker.io) 2>/dev/null
+#   echo $?
+# }
+
+# check_and_install_docker() {
+#   found_docker=$(check_docker)
+#   if [ "$found_docker" -ne 0 ]; then
+#     echo Failed to find docker or docker.io on your PATH.
+#     read -p "Enter to install Docker from https://get.docker.com/ or Ctrl+C to exit"
+#     curl https://get.docker.com/ | sh
+
+#     found_docker=$(check_docker)
+#     if [ "$found_docker" -ne 0 ]; then
+#       echo Still failed to find docker or docker.io on your PATH.
+#       echo Docker install failed. Quitting.
+#       exit
+#     fi
+#   fi
+# }
+
+# ## Add user Shotengai
+# #password: shotengai_codeflakes_2021
+# sudo adduser shotengai
+# sudo usermod -aG sudo shotengai
+# sudo passwd -d shotengai_codeflakes_2021

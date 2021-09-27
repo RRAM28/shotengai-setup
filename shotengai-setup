@@ -52,7 +52,7 @@ log_info "Installing image utilities ..."
   sudo apt-get -y install jhead
 
 log_info "Installing make utilities ..."
-  apt-get -y install make
+  sudo apt-get -y install make
 
 if [[ ! -d "$HOME/.rbenv" ]]; then
   log_info "Installing rbenv ..."

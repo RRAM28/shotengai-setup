@@ -97,9 +97,6 @@ fi
 sudo usermod -aG docker ${USER}
 sudo usermod -aG docker shotengai
 
-# Delete packages no longer required
-sudo apt dist-upgrade && sudo apt autoremove -y
-
 # check_docker() {
 #   (which docker || which docker.io) 2>/dev/null
 #   echo $?

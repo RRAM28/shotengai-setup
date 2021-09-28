@@ -82,7 +82,7 @@ log_info "Installing Rails 6.0.2 ..."
   gem install rails -v 6.0.2
 
 log_info "Installing Bundler 2.2.15 ..."
-  gem install bundler:2.2.15 --no-rdoc --no-ri
+  gem install bundler:2.2.15
   gem env home
   rbenv rehash
 

@@ -2,10 +2,9 @@
 
 # Add user Shotengai
 
-log_info "Creating Shotengai User ..."
-  sudo useradd -m shotengai
-  sudo usermod -aG sudo shotengai
-  sudo passwd -e shotengai
+sudo useradd -m shotengai
+sudo usermod -aG sudo shotengai
+sudo passwd -e shotengai
 
 # Install Shotengai Dependencies
 
@@ -60,9 +59,9 @@ if [[ ! -d "$HOME/.rbenv" ]]; then
     if ! grep -qs "rbenv init" ~/.bashrc; then
       printf 'export PATH="$HOME/.rbenv/bin:$PATH"\n' >> ~/.bashrc
       printf 'eval "$(rbenv init - --no-rehash)"\n' >> ~/.bashrc
-      source ~/.bashrc
     fi
 
+    source ~/.bashrc
     export PATH="$HOME/.rbenv/bin:$PATH"
     eval "$(rbenv init -)"
 fi

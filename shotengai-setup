@@ -89,7 +89,12 @@ if [ ! -x "$(command -v docker)" ]; then
   log_info "Installing Docker ..."
     curl https://get.docker.com/ | sh
   log_info "Avoid typing sudo ..."
-    source ~/.bashrc
     sudo usermod -aG docker ${USER}
     sudo usermod -aG docker shotengai
+fi
+
+if [ ! -x "$(command -v docker-compose)" ]; then
+  log_info "Installing Docker-Compose ..."
+    sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    sudo chmod +x /usr/local/bin/docker-compose
 fi

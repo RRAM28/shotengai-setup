@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+# Add user Shotengai
+
+sudo useradd -m shotengai
+sudo usermod -aG sudo shotengai
+sudo passwd -e shotengai
+
 # Install Shotengai Dependencies
 
 trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
@@ -31,14 +37,17 @@ log_info "Installing Postgres ..."
 log_info "Installing curl ..."
   sudo apt-get -y install curl
 
-log_info "Installing ImageMagick ..."
-  sudo apt-get -y install libtool
-  wget https://raw.githubusercontent.com/discourse/discourse_docker/master/image/base/install-imagemagick
-  chmod +x install-imagemagick
-  sudo ./install-imagemagick
+if [ ! "$(convert -version)" &> /dev/null ]; then
+  log_info "Installing ImageMagick ..."
+    sudo apt-get -y install libtool
+    wget https://raw.githubusercontent.com/discourse/discourse_docker/master/image/base/install-imagemagick
+    chmod +x install-imagemagick
+    sudo ./install-imagemagick
+fi
 
-# log_info "Installing ImageMagick ..."
-#   sudo apt-get -y install libmagick++-dev
+log_info "Installing image utilities ..."
+  sudo apt-get -y install advancecomp gifsicle jpegoptim libjpeg-progs optipng pngcrush pngquant
+  sudo apt-get -y install jhead
 
 log_info "Installing make ..."
   sudo apt-get -y install make
@@ -73,40 +82,15 @@ log_info "Installing Rails 6.0.2 ..."
   gem install rails -v 6.0.2
 
 log_info "Installing Bundler 2.2.15 ..."
-  gem install bundler:2.2.15
+  gem install bundler:2.2.15 --no-rdoc --no-ri
+  gem env home
+  rbenv rehash
 
-## Install Docker
-if [[ ! -d $(which docker) && $(docker --version) ]]; then
+if [ ! -x "$(command -v docker)" ]; then
   log_info "Installing Docker ..."
     curl https://get.docker.com/ | sh
+  log_info "Avoid typing sudo ..."
+    source ~/.bashrc
+    sudo usermod -aG docker ${USER}
+    sudo usermod -aG docker shotengai
 fi
-# # avoid typing sudo
-# sudo usermod -aG docker ${USER}
-# sudo usermod -aG docker shotengai
-
-# check_docker() {
-#   (which docker || which docker.io) 2>/dev/null
-#   echo $?
-# }
-
-# check_and_install_docker() {
-#   found_docker=$(check_docker)
-#   if [ "$found_docker" -ne 0 ]; then
-#     echo Failed to find docker or docker.io on your PATH.
-#     read -p "Enter to install Docker from https://get.docker.com/ or Ctrl+C to exit"
-#     curl https://get.docker.com/ | sh
-
-#     found_docker=$(check_docker)
-#     if [ "$found_docker" -ne 0 ]; then
-#       echo Still failed to find docker or docker.io on your PATH.
-#       echo Docker install failed. Quitting.
-#       exit
-#     fi
-#   fi
-# }
-
-# ## Add user Shotengai
-# #password: shotengai_codeflakes_2021
-# sudo adduser shotengai
-# sudo usermod -aG sudo shotengai
-# sudo passwd -d shotengai_codeflakes_2021

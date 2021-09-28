@@ -2,9 +2,10 @@
 
 # Add user Shotengai
 
-sudo useradd -m shotengai
-sudo usermod -aG sudo shotengai
-sudo passwd -e shotengai
+log_info "Creating Shotengai User ..."
+  sudo useradd -m shotengai
+  sudo usermod -aG sudo shotengai
+  sudo passwd -e shotengai
 
 # Install Shotengai Dependencies
 
@@ -69,10 +70,9 @@ fi
 if [[ ! -d "$HOME/.rbenv/plugins/ruby-build" ]]; then
   log_info "Installing ruby-build, to install Rubies ..."
     git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
+  log_info "Installing Ruby 2.7.2 ..."
+    rbenv install 2.7.2
 fi
-
-log_info "Installing Ruby 2.7.2 ..."
-  rbenv install 2.7.2
 
 log_info "Setting 2.7.2 as global default Ruby ..."
   rbenv global 2.7.2

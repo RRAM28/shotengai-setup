@@ -37,9 +37,6 @@ log_info "Installing ImageMagick ..."
   chmod +x install-imagemagick
   sudo ./install-imagemagick
 
-# log_info "Installing ImageMagick ..."
-#   sudo apt-get -y install libmagick++-dev
-
 log_info "Installing make ..."
   sudo apt-get -y install make
 

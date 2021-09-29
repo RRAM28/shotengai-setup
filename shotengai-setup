@@ -2,10 +2,9 @@
 
 # Add user Shotengai
 
-log_info "Adding user Shotengai ..."
-  sudo useradd -m shotengai
-  sudo usermod -aG sudo shotengai
-  sudo passwd -e shotengai
+sudo useradd -m shotengai
+sudo usermod -aG sudo shotengai
+sudo passwd -e shotengai
 
 # Install Shotengai Dependencies
 

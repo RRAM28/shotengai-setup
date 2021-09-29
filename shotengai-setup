@@ -72,9 +72,6 @@ log_info "Setting 2.7.2 as global default Ruby ..."
   rbenv global 2.7.2
   rbenv rehash
 
-log_info "Updating to latest Rubygems version ..."
-  gem update --system
-
 log_info "Installing Rails 6.0.2 ..."
   gem install rails -v 6.0.2
 

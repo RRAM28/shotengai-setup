@@ -94,11 +94,11 @@ if [ ! -x "$(command -v docker-compose)" ]; then
 fi
 
 if [ ! -x "$(command -v node)" ]; then
-log_info "Installing Node.js 10 ..."
-  curl -fsSL https://deb.nodesource.com/setup_12.x | sudo -E bash -
-  sudo apt-get install -y nodejs
-  sudo npm install -g svgo
-  sudo npm install -g yarn
+  log_info "Installing Node.js 10 ..."
+    curl -fsSL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+    sudo apt-get install -y nodejs
+    sudo npm install -g svgo
+    sudo npm install -g yarn
 fi
 
 sudo -E bash -

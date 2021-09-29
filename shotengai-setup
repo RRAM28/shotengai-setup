@@ -37,13 +37,13 @@ log_info "Installing Postgres ..."
 log_info "Installing curl ..."
   sudo apt-get -y install curl
 
-if [ ! "$(convert -version)" &> /dev/null ]; then
-  log_info "Installing ImageMagick ..."
-    sudo apt-get -y install libtool
-    wget https://raw.githubusercontent.com/discourse/discourse_docker/master/image/base/install-imagemagick
-    chmod +x install-imagemagick
-    sudo ./install-imagemagick
-fi
+# if [ ! "$(convert -version)" &> /dev/null ]; then
+#   log_info "Installing ImageMagick ..."
+#     sudo apt-get -y install libtool
+#     wget https://raw.githubusercontent.com/discourse/discourse_docker/master/image/base/install-imagemagick
+#     chmod +x install-imagemagick
+#     sudo ./install-imagemagick
+# fi
 
 log_info "Installing make ..."
   sudo apt-get -y install make
@@ -100,3 +100,5 @@ log_info "Installing Node.js 10 ..."
   sudo npm install -g svgo
   sudo npm install -g yarn
 fi
+
+sudo -E bash -

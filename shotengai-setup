@@ -2,9 +2,10 @@
 
 # Add user Shotengai
 
-sudo useradd -m shotengai
-sudo usermod -aG sudo shotengai
-sudo passwd -e shotengai
+log_info "Adding user Shotengai ..."
+  sudo useradd -m shotengai
+  sudo usermod -aG sudo shotengai
+  sudo passwd -e shotengai
 
 # Install Shotengai Dependencies
 
@@ -59,6 +60,7 @@ if [[ ! -d "$HOME/.rbenv" ]]; then
 
     export PATH="$HOME/.rbenv/bin:$PATH"
     eval "$(rbenv init -)"
+    sudo -E bash
 fi
 
 if [[ ! -d "$HOME/.rbenv/plugins/ruby-build" ]]; then
@@ -84,7 +86,6 @@ if [ ! -x "$(command -v docker)" ]; then
   log_info "Installing Docker ..."
     curl https://get.docker.com/ | sh
   log_info "Avoid typing sudo ..."
-    sudo usermod -aG docker ${USER}
     sudo usermod -aG docker shotengai
 fi
 
@@ -94,10 +95,10 @@ if [ ! -x "$(command -v docker-compose)" ]; then
     sudo chmod +x /usr/local/bin/docker-compose
 fi
 
-if [ ! -x "$(command -v node)" ]; then
-log_info "Installing Node.js 10 ..."
-  curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
-  sudo apt-get install -y nodejs
-  sudo npm install -g svgo
-  sudo npm install -g yarn
-fi
+# if [ ! -x "$(command -v node)" ]; then
+# log_info "Installing Node.js 10 ..."
+#   curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+#   sudo apt-get install -y nodejs
+#   sudo npm install -g svgo
+#   sudo npm install -g yarn
+# fi

@@ -37,7 +37,7 @@ log_info "Installing Postgres ..."
 log_info "Installing curl ..."
   sudo apt-get -y install curl
 
-if [ ! -x "$(convert -version)" ]; then
+if [ ! "$(convert -version)" &> /dev/null ]; then
   log_info "Installing ImageMagick ..."
     sudo apt-get -y install libtool
     wget https://raw.githubusercontent.com/discourse/discourse_docker/master/image/base/install-imagemagick
